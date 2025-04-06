@@ -1,71 +1,258 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Page Title</title>
-</head>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Bestie 💖</title>
+  <style>
     body {
-        background: rgb(242, 9, 242);
+      margin: 0;
+      background: #fff0f5;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      overflow-x: hidden;
     }
 
-    #heart {
-        position: fixed;
-        top: 200px;
-        left: 210px;
-        font-size: 3rem;
-        transition: all 1s;
-
-        /*  filter: hue-rotate(180deg); green */
-
-        /*  filter: hue-rotate(200deg); blue */
-
-        /* filter: hue-rotate(50deg);  orange */
+    h1 {
+      color: #ff1493;
+      font-size: 2.5rem;
+      margin: 20px;
     }
-    p{
-        font-size: 20px;
-    }
-   body div{
-    }
-</style>
 
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    .card {
+      width: 150px;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      padding: 10px;
+      border-radius: 10px;
+      transform: rotate(var(--r));
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.05) rotate(0deg);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-style: italic;
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    .popup, .surprise {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .popup-content, .surprise-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      background: #ff1493;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      margin-top: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff69b4;
+      animation: fall 4s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Floating text animation */
+    .floating-container {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .floating-message {
+      font-size: 2rem;
+      color: rgb(161, 225, 10);
+      font-weight: bold;
+      animation: floatUp 4s linear infinite;
+      margin-top: 10px;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh); opacity: 1; }
+      100% { transform: translateY(-20vh); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 120px;
+      }
+
+      .card img {
+        height: 150px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
 <body>
-    <center>
-        <div id="heart" onclick="setInterval(move.bind(this), 1000)">❤️<p>
-                hey
-            <h3 style="color: rgb(241, 235, 237);">ISHWARI</h3> <p>I just wanted to take a moment to tell you how much I
-            love you. When day I spend with you feels like a beautiful dream come true 🌟. Your smile, your laugh, your
-            kindness – everything about you makes my heart feel so full ❤️.</p>
 
-        <p>You bring so much joy and love into my life, and I am incredibly grateful for you 🙏. I cherish every moment
-            we share and look forward to creating countless more memories together 🌸. </p><p> And I irritate sometime,give
-            anger and most important hurt but trust mee that's not my intension don't know how mera b hi ho jata hai</p>
+  <h1>🎉 Happy Birthday Neha 💖</h1>
 
-            <p>i do many rongfvefgergergre things you can punish but never live me alone 🙏</p>
-            <p>So i wanted to tell you that</p>
-            <h4 style="color: pink;">I LOVE YOU MOST, MOST AND MOST BACCHA❤️</h4>
+  <!-- Floating container -->
+  <div class="floating-container" id="floating-container"></div>
 
-        </div>
-    </center>
-</body>
+  <div class="gallery">
+    <div class="card" style="--r:-5deg" onclick="showMsg(0)">
+      <img src="im1.jpg" alt="1">
+      <div class="caption">Smiles & Sunshine</div>
+    </div>
+    <div class="card" style="--r:3deg" onclick="showMsg(1)">
+      <img src="im2.jpg" alt="2">
+      <div class="caption">Cuteness Overload</div>
+    </div>
+    <div class="card" style="--r:-4deg" onclick="showMsg(2)">
+      <img src="im3.jpg" alt="3">
+      <div class="caption">Best Friend Goals</div>
+    </div>
+    <div class="card" style="--r:6deg" onclick="showMsg(3)">
+      <img src="im4.jpg" alt="4">
+      <div class="caption">Pure Vibes</div>
+    </div>
+    <div class="card" style="--r:-3deg" onclick="showMsg(4)">
+      <img src="im5.jpg" alt="5">
+      <div class="caption">Forever Us</div>
+    </div>
+    <div class="card" style="--r:2deg" onclick="showMsg(5)">
+      <img src="im6.jpg" alt="6">
+      <div class="caption">Laughing Always</div>
+    </div>
+    <div class="card" style="--r:-6deg" onclick="showMsg(6)">
+      <img src="im7.jpg" alt="7">
+      <div class="caption">Queen Moment</div>
+    </div>
+  </div>
 
-<script>
-    var pos = [
-        [100, 100, "hue-rotate(0deg)"],
-        [200, 100, "hue-rotate(180deg)"],
-        [200, 200, "hue-rotate(150deg)"],
-        [100, 200, "hue-rotate(50deg)"]
-    ]
-    var c = 0
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content" id="popup-msg"></div>
+    <button class="btn" onclick="closeMsg()">Close</button>
+  </div>
 
-    function move() {
-        c = c < pos.length - 1 ? c + 1 : 0
-        this.style.left = pos[c][0] + "px"
-        this.style.top = pos[c][1] + "px"
-        this.style.filter = pos[c][2];
+
+
+  <!-- Birthday Message Bottom -->
+  <!-- Birthday Message Bottom -->
+<div style="margin-top: 40px; font-size: 1.3rem; color: #800080; font-style: italic; text-align: center; padding: 0 15px;">
+  🎂 Wishing you a very Happy Birthday!  
+  May your day be filled with laughter, joy, and good vibes.  
+  I'm really glad to have a friend like you.  
+  <br><strong>Enjoy your day to the fullest! 🎈🥳</strong>
+</div>
+
+
+  <!-- Confetti -->
+  <script>
+    for(let i=0; i<40; i++) {
+      let c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.animationDelay = Math.random() * 4 + 's';
+      c.style.backgroundColor = ['#ff69b4','#ff1493','#ffc0cb','#fcdfff'][i%4];
+      document.body.appendChild(c);
+    }
+  </script>
+
+  <!-- Floating Messages Script -->
+  <script>
+    const container = document.getElementById('floating-container');
+    setInterval(() => {
+      const msg = document.createElement('div');
+      msg.className = 'floating-message';
+      msg.innerText = 'Happy Birthday 💜';
+      msg.style.left = Math.random() * 100 + 'vw';
+      container.appendChild(msg);
+      setTimeout(() => msg.remove(), 4000);
+    }, 600);
+  </script>
+
+  <!-- Main Logic Script -->
+  <script>
+    const messages = [
+      "Always Happy and Smile ☀️",
+      "So lucky to have a friend like you 💕",
+      "You're a walking bundle of joy 🧸",
+      "Your energy makes the world better 🌍",
+      "Best friend forever? Hell yeah! 🤜🤛",
+      "Thanks for being YOU 💖",
+      "Your are always Best👑"
+    ];
+
+    let clickCount = 0;
+
+    function showMsg(i) {
+      document.getElementById("popup-msg").innerText = messages[i];
+      document.getElementById("popup").style.display = "flex";
+      clickCount++;
+      if (clickCount === 5) {
+        setTimeout(() => {
+          document.getElementById("surprise").style.display = "flex";
+        }, 800);
+      }
     }
 
-    alert("You touch my heart")
-</script>
+    function closeMsg() {
+      document.getElementById("popup").style.display = "none";
+    }
 
+    function closeSurprise() {
+      document.getElementById("surprise").style.display = "none";
+    }
+  </script>
+</body>
 </html>
